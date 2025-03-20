@@ -81,7 +81,7 @@ const MessageList = () => {
                                     <img
                                         src={message.content}
                                         alt="Message Image"
-                                        className="border p-2 rounded h-40 md:h-52 object-cover"
+                                        className="border p-2 rounded h-40 md:h-52 object-cover hover:cursor-pointer"
                                         onClick={() => window.open(message.content, "_blank")}
                                     />
                                 )}
