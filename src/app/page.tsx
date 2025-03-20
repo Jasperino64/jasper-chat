@@ -24,17 +24,21 @@ async function getUsers(): Promise<User[]> {
     const currentUser = await getUser()
 
     const pipeline = redis.pipeline()
-    userKeys.forEach((key) => pipeline.hgetall(key))
-    const results = (await pipeline.exec()) as User[]
+    if (userKeys.length > 0) {
+        userKeys.forEach((key) => pipeline.hgetall(key))
+        const results = (await pipeline.exec()) as User[]
 
-    const users: User[] = []
-    for (const user of results) {
-        if (user.id !== currentUser?.id) {
-            users.push(user)
+        const users: User[] = []
+        for (const user of results) {
+            if (user.id !== currentUser?.id) {
+                users.push(user)
+            }
         }
-    }
 
-    return users
+        return users
+    } else {
+        return []
+    }
 }
 export default async function Home() {
     const { isAuthenticated } = await getKindeServerSession()
